@@ -198,15 +198,27 @@ export default function Page() {
     if (path.length > 1) {
       const newPath = [...path.slice(0, -1)];
       setPath(newPath);
-      setCurrentFolder(newPath[newPath.length - 1].id);
+      // Add null check before accessing the id
+      if (newPath.length > 0) {
+        setCurrentFolder(newPath[newPath.length - 1]?.id || "root");
+      } else {
+        setCurrentFolder("root"); // Fallback to root if path is empty
+      }
     }
   };
 
   // Navigate to specific path index
   const navigateToPathIndex = (index: number) => {
-    const newPath = [...path.slice(0, index + 1)];
-    setPath(newPath);
-    setCurrentFolder(newPath[newPath.length - 1].id);
+    if (index >= 0 && index < path.length) {
+      const newPath = [...path.slice(0, index + 1)];
+      setPath(newPath);
+      // Add null check before accessing the id
+      if (newPath.length > 0) {
+        setCurrentFolder(newPath[newPath.length - 1]?.id || "root");
+      } else {
+        setCurrentFolder("root"); // Fallback to root if path is empty
+      }
+    }
   };
 
   // Handle upload button click
@@ -337,18 +349,22 @@ export default function Page() {
             </button>
           )}
           <span className="text-lg font-medium text-white">
-            {path[path.length - 1].name ?? "My Drive"}
+            {path.length > 0 ? path[path.length - 1]?.name : "My Drive"}
           </span>
         </div>
         <div className="flex items-center">
           <button
-            className={`rounded-full p-2 ${viewMode === "list" ? "bg-gray-700" : "hover:bg-gray-800"}`}
+            className={`rounded-full p-2 ${
+              viewMode === "list" ? "bg-gray-700" : "hover:bg-gray-800"
+            }`}
             onClick={() => setViewMode("list")}
           >
             <List className="h-5 w-5 text-gray-300" />
           </button>
           <button
-            className={`ml-2 rounded-full p-2 ${viewMode === "grid" ? "bg-gray-700" : "hover:bg-gray-800"}`}
+            className={`ml-2 rounded-full p-2 ${
+              viewMode === "grid" ? "bg-gray-700" : "hover:bg-gray-800"
+            }`}
             onClick={() => setViewMode("grid")}
           >
             <Grid className="h-5 w-5 text-gray-300" />

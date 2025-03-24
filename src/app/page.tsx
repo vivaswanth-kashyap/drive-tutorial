@@ -200,7 +200,7 @@ export default function Page() {
       setPath(newPath);
       // Add null check before accessing the id
       if (newPath.length > 0) {
-        setCurrentFolder(newPath[newPath.length - 1]?.id || "root");
+        setCurrentFolder(newPath[newPath.length - 1]?.id ?? "root");
       } else {
         setCurrentFolder("root"); // Fallback to root if path is empty
       }
@@ -214,7 +214,7 @@ export default function Page() {
       setPath(newPath);
       // Add null check before accessing the id
       if (newPath.length > 0) {
-        setCurrentFolder(newPath[newPath.length - 1]?.id || "root");
+        setCurrentFolder(newPath[newPath.length - 1]?.id ?? "root");
       } else {
         setCurrentFolder("root"); // Fallback to root if path is empty
       }
